@@ -5,14 +5,14 @@ public:
         if (nRows == 1)
             return s;
             
-        vector<string> parts;
-        for (int i=0; i<nRows; i++)
-            parts.push_back("");
+        int * rows = new int[s.size()];
+        for (int i=0; i<s.size(); i++)
+            rows[i] = -1;
         int i=0, row=0;
         bool down=true;
         while (i < s.size())
         {
-            parts[row] += s[i];
+            rows[i] = row;
             i++;
             if (row == nRows-1)
                 down = false;
@@ -22,8 +22,10 @@ public:
             else row--;
         }
         string res="";
-        for (int i=0; i<parts.size(); i++)
-            res += parts[i];
+        for (int r=0; r<nRows; r++)
+            for (int i=0; i<s.size(); i++)
+                if (rows[i] == r)
+                    res += s[i];
         return res;
     }
 };
