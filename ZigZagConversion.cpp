@@ -4,28 +4,28 @@ public:
     {
         if (nRows == 1)
             return s;
-            
-        int * rows = new int[s.size()];
-        for (int i=0; i<s.size(); i++)
-            rows[i] = -1;
-        int i=0, row=0;
-        bool down=true;
-        while (i < s.size())
-        {
-            rows[i] = row;
-            i++;
-            if (row == nRows-1)
-                down = false;
-            if (row == 0)
-                down = true;
-            if (down) row++;
-            else row--;
-        }
         string res="";
-        for (int r=0; r<nRows; r++)
-            for (int i=0; i<s.size(); i++)
-                if (rows[i] == r)
-                    res += s[i];
+        for (int row=0; row<nRows; row++)
+        {
+            int inc = 2*(nRows-2)+2;
+            int upInc = 2, dnInc = 2;
+            for (int j=row-1; j>0; j--)
+                upInc += 2;
+            for (int j=row+1; j<nRows-1; j++)
+                dnInc += 2;
+                
+            bool down=true;
+            for (int i=row; i<s.size(); )
+            {
+                res += s[i];
+                if (row == 0 || row == nRows-1)
+                    i += inc;
+                else{
+                    i += (down)?(dnInc):(upInc);
+                   down = !down;
+                }
+            }
+        }
         return res;
     }
 };
