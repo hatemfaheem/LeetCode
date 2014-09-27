@@ -5,32 +5,29 @@
  *      Author: hatemfaheem
  */
 
-#include <string>
-using namespace std;
-
 class Solution {
+    int * memo;
+    string s;
 public:
-    int numDecodings(string s) {
-    	if (s.size() == 1)
+    int decodings(int start)
+    {
+    	if (s[start] == '0')
     		return 0;
-    	else if (s.size() == 1)
+    	if (start >= s.size()-1)
     		return 1;
-    	else{
-    		if (s[0]=='1')
-    			return 2;
-    		else if (s[0]=='2'){
-    			if (s[1]>='0'&&s[1]<='6')
-    				return 2;
-    			else
-    				return 1;
-    		}
-    		else
-    			return 1;
-    	}
+    	if (memo[start] != -1) return memo[start];
+    	int n = (s[start]-'0')*10 + (s[start+1]-'0');
+    	int d = decodings(start+1);
+    	if (n<=26)
+    		d += decodings(start+2);
+    	return (memo[start] = d);
+    }
+
+    int numDecodings(string s) {
+        memo = new int[s.size()];
+		for (int i=0; i<s.size(); i++)
+			memo[i] = -1;
+		this->s = s;
+		return decodings(0);
     }
 };
-
-int main()
-{
-	return 0;
-}
