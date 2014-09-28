@@ -2,18 +2,20 @@ class Solution {
 public:
     int lengthOfLongestSubstring(string s)
     {
+        int index[256];
+        for (int i=0; i<256; i++)
+            index[i]=-1;
         int start=0, currentMax=0, currentLength=0;
         for (int i=0; i<s.size(); i++)
         {
-            int j=i-1;
-            for (; j>=start && s[j]!=s[i]; j--);
-            if (j<start)
+            if (index[s[i]]<start)
                 currentLength += 1;
             else{
                 currentMax = max(currentMax, currentLength);
-                start = j+1;
-                currentLength = i-j;
+                start = index[s[i]]+1;
+                currentLength = i-index[s[i]];
             }
+            index[s[i]]=i;
         }
         currentMax = max(currentMax, currentLength);
         return currentMax;
