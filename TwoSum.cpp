@@ -13,7 +13,8 @@ bool compare(const Element & e1, const Element & e2)
 
 class Solution {
 public:
-    vector<int> twoSum(vector<int> &numbers, int target) {
+    vector<int> twoSum(vector<int> &numbers, int target)
+	{
         vector<Element> elements;
         for (int i=0; i<numbers.size(); i++)
             elements.push_back(Element(numbers[i],i+1));
