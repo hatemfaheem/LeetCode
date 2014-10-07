@@ -1,23 +1,21 @@
 class Solution {
 public:
+    void generate(vector<int> &S, vector<vector<int> > & nSubsets, vector<int> currentSubset, int index)
+    {
+        if (index == S.size()){
+            nSubsets.push_back(currentSubset);
+            return;
+        }
+        generate(S, nSubsets, currentSubset, index+1);
+        currentSubset.push_back(S[index]);
+        generate(S, nSubsets, currentSubset, index+1);
+    }
+    
     vector<vector<int> > subsets(vector<int> &S) {
         sort(S.begin(), S.end());
-        int n=pow(2,S.size())-1;
         vector<vector<int> > nSubsets;
-        nSubsets.push_back(vector<int>());
-        while(n){
-            int x=n;
-            vector<int> v;
-            int digit=0;
-            while(x){
-                if (x&1)
-                    v.push_back(S[digit]);
-                digit++;
-                x >>= 1;
-            }
-            nSubsets.push_back(v);
-            n-=1;
-        }
+        vector<int> set;
+        generate(S, nSubsets, set, 0);
         return nSubsets;
     }
 };
