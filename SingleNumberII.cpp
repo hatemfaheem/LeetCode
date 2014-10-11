@@ -1,16 +1,23 @@
+#include <iostream>
+using namespace std;
+
 class Solution {
 public:
     int singleNumber(int A[], int n)
     {
-        unordered_map<int,int> counts;
-        for (int i=0; i<n; i++)
-            if (counts.find(A[i]) != counts.end())
-                counts[A[i]] += 1;
-            else
-                counts[A[i]] = 1;
-        for (unordered_map<int,int>::iterator it=counts.begin(); it!=counts.end(); it++)
-            if (it->second != 3)
-                return it->first;
-        return -1;
+		int result = 0;
+        for (unsigned int i=0; i<n; i++)
+	        	result ^= A[i];
+        return result;
     }
 };
+
+int main()
+{
+	int n=10;
+	int A[] = {3,3,3,7,7,7,4,4,4,10};
+	Solution s;
+	cout << s.singleNumber(A, n) << "\n";
+	cout << (A[0]^A[0]^A[0]) << "\n";
+	return 0;
+}
