@@ -6,18 +6,15 @@ class Solution {
 public:
     int singleNumber(int A[], int n)
     {
-        int digits[32]; // digits sum
-        for (int d=0; d<32; d++)
-            digits[d]=0;
-        for (int d=0; d<32; d++)
-            for (int i=0; i<n; i++)
-                digits[d] += ((A[i] >> d) & 1);
-        int  result = 0;
+        int result=0;
         for (int d=31; d>=0; d--){
-			result <<= 1;
-            result |= (digits[d]%3!=0);
-		}
-        return (result);
+            int digitSum = 0;
+            for (int i=0; i<n; i++)
+                digitSum += ((A[i] >> d) & 1);
+            result <<= 1;
+            result |= (digitSum%3!=0);
+        }
+        return result;
     }
 };
 
